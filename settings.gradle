@@ -1,0 +1,4 @@
+rootProject.name = 'detekt-example'
+include 'example'
+findProject(':example')?.name = 'detekt-example'
+

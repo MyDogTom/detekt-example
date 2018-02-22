@@ -1,0 +1,501 @@
+import com.github.mydogtom.detekt.SimplePlugin
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+
+repositories {
+    jcenter()
+}
+
+apply plugin: SimplePlugin.class
+
+detekt {
+    config{
+        failFast = false
+        autoCorrect = false
+
+        build {
+            warningThreshold = 0
+            failThreshold = 0
+            weights {
+                complexity = 2
+                formatting = 1
+                longParameterList = 1
+                comments = 1
+            }
+        }
+//        processors {
+//            active = true
+//            exclude = [
+//                    'FunctionCountProcessor',
+//                    'PropertyCountProcessor',
+//                    'ClassCountProcessor',
+//                    'PackageCountProcessor',
+//                    'KtFileCountProcessor'
+//            ]
+//        }
+
+//        consoleReports {
+//            active = true
+//            exclude = [
+//                    'ProjectStatisticsReport',
+//                    'ComplexityReport',
+//                    'NotificationReport',
+//                    'FindingsReport',
+//                    'BuildFailureReport']
+//        }
+
+        outputReports {
+            active = true
+            exclude = [
+                    'PlainOutputReport',
+                    'XmlOutputReport']
+        }
+
+        comments {
+            active = true
+            commentOverPrivateFunction {
+                active = true
+            }
+            commentOverPrivateProperty {
+                active = true
+            }
+            endOfSentenceFormat {
+                active = false
+                endOfSentenceFormat = '([.?!][ \t\n\r\f<])|([.?!]$)}'
+                undocumentedPublicClass {
+                    active = false
+                    searchInNestedClass = true
+                    searchInInnerClass = true
+                    searchInInnerObject = true
+                    searchInInnerInterface = true
+                }
+                undocumentedPublicFunction {
+                    active = false
+                }
+            }
+        }
+
+        complexity {
+            active = true
+            complexCondition {
+                active = true
+                threshold = 3
+            }
+            complexInterface {
+                active = false
+                threshold = 10
+                includeStaticDeclarations = false
+            }
+            complexMethod {
+                active = true
+                threshold = 10
+            }
+            labeledExpression {
+                active = false
+            }
+            largeClass {
+                active = true
+                threshold = 150
+            }
+            longMethod {
+                active = true
+                threshold = 20
+            }
+            longParameterList {
+                active = true
+                threshold = 5
+                ignoreDefaultParameters = false
+            }
+            methodOverloading {
+                active = false
+                threshold = 5
+            }
+            nestedBlockDepth {
+                active = true
+                threshold = 3
+            }
+            stringLiteralDuplication {
+                active = false
+                threshold = 2
+                ignoreAnnotation = true
+                excludeStringsWithLessThan5Characters = true
+                ignoreStringsRegex = '$^'
+            }
+            tooManyFunctions {
+                active = true
+                thresholdInFiles = 10
+                thresholdInClasses = 10
+                thresholdInInterfaces = 10
+                thresholdInObjects = 10
+                thresholdInEnums = 10
+            }
+        }
+
+        emptyBlocks {
+            active = true
+            emptyCatchBlock {
+                active = true
+                allowedExceptionNameRegex = '^(ignore|expected).*'
+            }
+            emptyClassBlock {
+                active = true
+            }
+            emptyDefaultConstructor {
+                active = true
+            }
+            emptyDoWhileBlock {
+                active = true
+            }
+            emptyElseBlock {
+                active = true
+            }
+            emptyFinallyBlock {
+                active = true
+            }
+            emptyForBlock {
+                active = true
+            }
+            emptyFunctionBlock {
+                active = true
+            }
+            emptyIfBlock {
+                active = true
+            }
+            emptyInitBlock {
+                active = true
+            }
+            emptyKtFile {
+                active = true
+            }
+            emptySecondaryConstructor {
+                active = true
+            }
+            emptyWhenBlock {
+                active = true
+            }
+            emptyWhileBlock {
+                active = true
+            }
+        }
+
+        exceptions {
+            active = true
+            exceptionRaisedInUnexpectedLocation {
+                active = false
+
+                methodNames = 'toString,hashCode,equals,finalize'
+            }
+            instanceOfCheckForException {
+                active = false
+            }
+            notImplementedDeclaration {
+                active = false
+            }
+            printStackTrace {
+                active = false
+            }
+            rethrowCaughtException {
+                active = false
+            }
+            returnFromFinally {
+                active = false
+            }
+            swallowedException {
+                active = false
+            }
+            throwingExceptionFromFinally {
+                active = false
+            }
+            throwingExceptionInMain {
+                active = false
+            }
+            throwingExceptionsWithoutMessageOrCause {
+                active = false
+                exceptions = 'IllegalArgumentException,IllegalStateException,IOException'
+            }
+            throwingNewInstanceOfSameException {
+                active = false
+            }
+            tooGenericExceptionCaught {
+                active = true
+                exceptions = [
+                        'ArrayIndexOutOfBoundsException',
+                        'Error',
+                        'Exception',
+                        'IllegalMonitorStateException',
+                        'NullPointerException',
+                        'IndexOutOfBoundsException',
+                        'RuntimeException',
+                        'Throwable'
+                ]
+            }
+            tooGenericExceptionThrown {
+                active = true
+                exceptions = [
+                        'Error',
+                        'Exception',
+                        'NullPointerException',
+                        'Throwable',
+                        'RuntimeException'
+                ]
+            }
+        }
+
+        naming {
+            active = true
+            classNaming {
+                active = true
+                classPattern = '[A-Z$][a-zA-Z0-9$]*'
+            }
+            enumNaming {
+                active = true
+                enumEntryPattern = '^[A-Z][_a-zA-Z0-9]*'
+            }
+            forbiddenClassName {
+                active = false
+                forbiddenName = ''
+            }
+            functionMaxLength {
+                active = true
+                maximumFunctionNameLength = 30
+            }
+            functionMinLength {
+                active = false
+                minimumFunctionNameLength = 3
+            }
+            functionNaming {
+                active = true
+                functionPattern = '^([a-z$][a-zA-Z$0-9]*)|(`.*`)$'
+            }
+            matchingDeclarationName {
+                active = true
+            }
+            memberNameEqualsClassName {
+                active = false
+                ignoreOverriddenFunction = true
+            }
+            objectPropertyNaming {
+                active = true
+                propertyPattern = '[A-Za-z][_A-Za-z0-9]*'
+            }
+            packageNaming {
+                active = true
+                packagePattern = '^[a-z]+(\\.[a-z][a-z0-9]*)*$'
+            }
+            topLevelPropertyNaming {
+                active = true
+                constantPattern = '[A-Z][_A-Z0-9]*'
+                propertyPattern = '[a-z][A-Za-z\\d]*'
+                privatePropertyPattern = '(_)?[a-z][A-Za-z0-9]*'
+            }
+            variableMaxLength {
+                active = false
+                maximumVariableNameLength = 64
+            }
+            variableMinLength {
+                active = false
+                minimumVariableNameLength = 1
+            }
+            variableNaming {
+                active = true
+                variablePattern = '[a-z][A-Za-z0-9]*'
+                privateVariablePattern = '(_)?[a-z][A-Za-z0-9]*'
+            }
+        }
+
+        performance {
+            active = true
+            forEachOnRange {
+                active = true
+            }
+            spreadOperator {
+                active = true
+            }
+            unnecessaryTemporaryInstantiation {
+                active = true
+            }
+        }
+
+        potentialBugs {
+            active = true
+            duplicateCaseInWhenExpression {
+                active = true
+            }
+            equalsAlwaysReturnsTrueOrFalse {
+                active = false
+            }
+            equalsWithHashCodeExist {
+                active = true
+            }
+            explicitGarbageCollectionCall {
+                active = true
+            }
+            invalidRange {
+                active = false
+            }
+            iteratorHasNextCallsNextMethod {
+                active = false
+            }
+            iteratorNotThrowingNoSuchElementException {
+                active = false
+            }
+            lateinitUsage {
+                active = false
+                excludeAnnotatedProperties = "asd"
+                ignoreOnClassesPattern = "asdf"
+            }
+            unconditionalJumpStatementInLoop {
+                active = false
+            }
+            unreachableCode {
+                active = true
+            }
+            unsafeCallOnNullableType {
+                active = false
+            }
+            unsafeCast {
+                active = false
+            }
+            uselessPostfixExpression {
+                active = false
+            }
+            wrongEqualsTypeParameter {
+                active = false
+            }
+        }
+
+
+        style {
+            active = true
+            collapsibleIfStatements {
+                active = false
+            }
+            dataClassContainsFunctions {
+                active = false
+                conversionFunctionPrefix = 'to'
+            }
+            equalsNullCall {
+                active = false
+            }
+            expressionBodySyntax {
+                active = false
+            }
+            forbiddenComment {
+                active = true
+                values = 'TODO:,FIXME:,STOPSHIP:'
+            }
+            forbiddenImport {
+                active = false
+                imports = ''
+            }
+            functionOnlyReturningConstant {
+                active = false
+                ignoreOverridableFunction = true
+                excludedFunctions = 'describeContents'
+            }
+            loopWithTooManyJumpStatements {
+                active = false
+                maxJumpCount = 1
+            }
+            magicNumber {
+                active = true
+                ignoreNumbers = '-1,0,1,2'
+                ignoreHashCodeFunction = false
+                ignorePropertyDeclaration = false
+                ignoreConstantDeclaration = true
+                ignoreCompanionObjectPropertyDeclaration = true
+                ignoreAnnotation = false
+                ignoreNamedArgument = true
+                ignoreEnums = false
+            }
+            maxLineLength {
+                active = true
+                maxLineLength = 120
+                excludePackageStatements = false
+                excludeImportStatements = false
+            }
+            mayBeConst {
+                active = false
+            }
+            modifierOrder {
+                active = true
+            }
+            nestedClassesVisibility {
+                active = false
+            }
+            newLineAtEndOfFile {
+                active = true
+            }
+            optionalAbstractKeyword {
+                active = true
+            }
+            optionalUnit {
+                active = false
+            }
+            optionalWhenBraces {
+                active = false
+            }
+            protectedMemberInFinalClass {
+                active = false
+            }
+            redundantVisibilityModifierRule {
+                active = false
+            }
+            returnCount {
+                active = true
+                max = 2
+                excludedFunctions = "equals"
+            }
+            safeCast {
+                active = true
+            }
+            serialVersionUIDInSerializableClass {
+                active = false
+            }
+            spacingBetweenPackageAndImports {
+                active = false
+            }
+            throwsCount {
+                active = true
+                max = 2
+            }
+            unnecessaryAbstractClass {
+                active = false
+            }
+            unnecessaryInheritance {
+                active = false
+            }
+            unnecessaryParentheses {
+                active = false
+            }
+            untilInsteadOfRangeTo {
+                active = false
+            }
+            unusedImports {
+                active = false
+            }
+            unusedPrivateMember {
+                active = false
+            }
+            useDataClass {
+                active = false
+                excludeAnnotatedClasses = ""
+            }
+            utilityClassWithPublicConstructor {
+                active = false
+            }
+            wildcardImport {
+                active = true
+                excludeImports = 'java.util.*,kotlinx.android.synthetic.*'
+            }
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
